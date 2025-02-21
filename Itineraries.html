@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Itineraries</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css" />
+    <style>
+        /* ... (Previous CSS styles) ... */
+
+:root {
+            --primary-color: #3498db; /* Example primary color */
+            --light-color: #f5f5f5;
+            --dark-color: #333;
+            --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        a:hover {
+            color: darken(var(--primary-color), 10%);
+        }
+
+        header {
+            background-color: #343a40;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        h2 {
+            color: var(--dark-color);
+            margin-bottom: 20px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+        }
+
+.itinerary-card h3 {
+            font-family: 'Montserrat', sans-serif;
+            margin-bottom: 15px;
+            color: var(--dark-color);
+            font-size: 1.8rem; /* Increased font size */
+            line-height: 1.3; /* Improved line height */
+        }
+
+        .itinerary-card p {
+            color: #777;
+            margin-bottom: 20px;
+            font-size: 1.1rem; /* Increased font size */
+            line-height: 1.6; /* Improved line height */
+        }
+
+        .itinerary-card ul {
+            list-style-type: disc;
+            margin-left: 20px;
+            color: #777;
+            font-size: 1rem; /* Increased font size */
+            line-height: 1.6; /* Improved line height */
+        }
+
+        .itinerary-card li {
+            margin-bottom: 10px;
+        }
+
+        .itinerary-card-content {
+            padding: 25px; /* Adjust padding as needed */
+        }
+
+         /* Responsive Text Adjustments */
+        @media (max-width: 768px) {
+            .itinerary-card h3 {
+                font-size: 1.5rem; /* Slightly smaller on mobile */
+            }
+
+            .itinerary-card p,
+            .itinerary-card ul,
+            .itinerary-card li {
+                font-size: 1rem; /* Slightly smaller on mobile */
+            }
+        }
+        /* Carousel Styles */
+        .itinerary-card .slick-slider { /* Target the Slick Carousel within the card */
+            margin-bottom: 20px; /* Space below the carousel */
+        }
+        .itinerary-card .slick-prev,
+        .itinerary-card .slick-next {
+            z-index: 10; /* Ensure arrows are above images */
+        }
+
+        .itinerary-card .slick-dots li button:before { /* Customize carousel dots */
+            font-size: 12px;
+            color: #777;
+        }
+
+        .itinerary-card .slick-dots li.slick-active button:before {
+            color: var(--primary-color); /* Highlight active dot */
+        }
+
+        .itinerary-card .slick-slide img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Hover Effects */
+        .itinerary-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+        }
+
+        .itinerary-card:hover {
+            transform: translateY(-8px); /* More pronounced lift on hover */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.18); /* Darker shadow */
+            cursor: pointer; /* Change cursor to indicate clickability */
+        }
+
+        .itinerary-card img {
+            transition: opacity 0.3s ease; /* Smooth image opacity transition */
+        }
+
+        .itinerary-card:hover img {
+            opacity: 0.9;  /* Slightly reduce image opacity on hover */
+        }
+
+
+        /* Cursor Effects (Example - Circle on Hover) */
+        .itinerary-card {
+            position: relative; /* Needed for positioning the circle */
+            overflow: hidden; /* Hide the circle if it goes outside the card */
+        }
+
+        .itinerary-card:hover::before { /* Create the circle on hover */
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* Center the circle */
+            width: 0;
+            height: 0;
+            border-radius: 50%; /* Make it a circle */
+            background-color: rgba(255, 255, 255, 0.3); /* Semi-transparent white */
+            transition: width 0.4s ease, height 0.4s ease; /* Smooth scaling */
+            pointer-events: none; /* Allow clicks to pass through */
+        }
+
+        .itinerary-card:hover::before { /* Expand the circle on hover */
+            width: 200%; /* Make it larger than the card */
+            height: 200%;
+        }
+nav {
+            background-color: #f0f0f0;
+            padding: 10px;
+            display: flex;
+            justify-content: space-around; /* Changed to space-around */
+            align-items: center; /* Vertically center items */
+            padding-left: 50px; /* Keep left padding for logo */
+            position: fixed; /* Fixed navigation */
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 3; /* Ensure it's above other elements */
+        }
+
+        .nav-item {
+            position: relative;
+            display: inline-block;
+            overflow: hidden;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 5px 10px;
+            text-decoration: none;
+            color: #333;
+            transition: color 0.3s;
+        }
+
+        .nav-item:hover .nav-link {
+            color: #007bff;
+        }
+
+        .nav-image {
+            position: absolute;
+            top: 50%;
+            left: -50px;
+            transform: translateY(-50%);
+            width: 30px;
+            height: auto;
+            transition: left 0.3s ease-in-out;
+        }
+
+        .nav-item:hover .nav-image {
+            left: 10px;
+        }
+
+        .hamburger {
+            font-size: 30px;
+            cursor: pointer;
+            padding: 10px;
+            background-color: #111;
+            color: white;
+            position: fixed; /* Fixed hamburger */
+            top: 20px;
+            left: 20px;
+            z-index: 4; /* Ensure it's above the nav */
+        }
+       .sidebar {
+            position: fixed;
+            top: 0;
+            left: -250px; /* Hidden off-screen by default */
+            width: 250px;
+            height: 100%;
+            background-color: #333;
+            color: white;
+            padding-top: 60px; /* Adjust for hamburger height */
+            transition: left 0.3s ease-in-out;
+            z-index: 3; /* Ensure it's above other elements */
+            overflow-y: auto; /* Add scroll if content overflows */
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar li {
+            padding: 10px 20px;
+            border-bottom: 1px solid #555;
+        }
+
+        .sidebar a {
+            text-decoration: none;
+            color: white;
+            display: block;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #555;
+        }
+
+        .sidebar.open {
+            left: 0; /* Slide in when open */
+        }
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+            z-index: 2; /* Below the sidebar but above the main content */
+            display: none; /* Hidden by default */
+            transition: opacity 0.3s ease; /* Smooth transition */
+        }
+
+        #overlay.open {
+            display: block; /* Show when open */
+            opacity: 1;
+        }
+
+        /* Styles for the main content area */
+        .content {
+            padding-top: 80px; /* Adjust for nav height */
+            transition: transform 0.3s ease; /* Smooth transition for shifting */
+        }
+
+        .content.shifted {
+            transform: translateX(250px); /* Shift content to the right */
+        }
+
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div class="nav-item">
+            <a href="#" class="nav-link">Home</a>
+            <img src="home_icon.png" alt="Home Icon" class="nav-image">
+        </div>
+        <div class="nav-item">
+            <a href="C:\Users\ksolo\OneDrive\Desktop\traveltales\destinations.html" class="nav-link">Destinations</a>
+            <img src="destination_icon.png" alt="Destinations Icon" class="nav-image">
+        </div>
+        <div class="nav-item">
+            <a href="C:\Users\ksolo\OneDrive\Desktop\traveltales\TravelTips.html" class="nav-link">Travel Tips</a>
+            <img src="tips_icon.png" alt="Travel Tips Icon" class="nav-image">
+        </div>
+        <div class="nav-item">
+            <a href="C:\Users\ksolo\OneDrive\Desktop\traveltales\Itineraries.html" class="nav-link">Itineraries</a>
+            <img src="itinerary_icon.png" alt="Itineraries Icon" class="nav-image">
+        </div>
+        <div class="nav-item">
+            <a href="C:\Users\ksolo\OneDrive\Desktop\traveltales\accomodation.html" class="nav-link">Accommodation</a>
+            <img src="accommodation_icon.png" alt="Accommodation Icon" class="nav-image">
+        </div>
+        <div class="nav-item">
+            <a href="C:\Users\ksolo\OneDrive\Desktop\traveltales\foods_drinks.html" class="nav-link">Food & Drink</a>
+            <img src="food_icon.png" alt="Food & Drink Icon" class="nav-image">
+        </div>
+        <div class="nav-item">
+            <a href="C:\Users\ksolo\OneDrive\Desktop\traveltales\TravelInsurance&Safety.html" class="nav-link">Travel Insurance & Safety</a>
+            <img src="safety_icon.png" alt="Safety Icon" class="nav-image">
+        </div>
+         <div class="nav-item">
+            <a href="C:\Users\ksolo\OneDrive\Desktop\traveltales\profile.html" class="nav-link">Profile</a>
+            <img src="safety_icon.png" alt="Profile" class="nav-image">
+        </div>
+        <div class="nav-item">
+            <img src="logo.png" alt="Profile" class="nav-image">
+        </div>
+    </nav>
+<br>
+<br>
+    <div class="hamburger" onclick="toggleSidebar()">&#9776;</div> <div id="sidebar" class="sidebar">
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">Transportation</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Photo Gallery</a></li>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Travel Forum</a></li>
+            <li><a href="#">Search</a></li>
+
+        </ul>
+    </div>
+
+    <div class="container">
+        <section class="section">
+            <div class="itinerary-container">
+
+                <div class="itinerary-card">
+                    <div class="itinerary-carousel">
+                        <div class="image-slide"><img src="https://via.placeholder.com/400x250/81D4FA/000000" alt="Paris 1"></div>
+                        <div class="image-slide"><img src="https://via.placeholder.com/400x250/81D4FA/000000" alt="Paris 2"></div>
+                        <div class="image-slide"><img src="https://via.placeholder.com/400x250/81D4FA/000000" alt="Paris 3"></div>
+                    </div>
+                    <div class="itinerary-card-content">
+                        <h3>3 Days in Paris</h3>
+                        <p>A whirlwind tour of the City of Lights.</p>
+                        <ul>
+                            <li>Day 1: Eiffel Tower, Louvre Museum, Seine River Cruise</li>
+                            <li>Day 2: Notre Dame Cathedral, Latin Quarter, Montmartre</li>
+                            <li>Day 3: Palace of Versailles (optional), Shopping, Farewell Dinner</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="itinerary-card">
+                    <div class="itinerary-carousel">
+                        <div class="image-slide"><img src="https://via.placeholder.com/400x250/A5D6A7/000000" alt="Tokyo 1"></div>
+                        <div class="image-slide"><img src="https://via.placeholder.com/400x250/A5D6A7/000000" alt="Tokyo 2"></div>
+                        <div class="image-slide"><img src="https://via.placeholder.com/400x250/A5D6A7/000000" alt="Tokyo 3"></div>
+                    </div>
+                    <div class="itinerary-card-content">
+                        <h3>7 Days in Tokyo</h3>
+                        <p>Explore the vibrant capital of Japan.</p>
+                        <ul>
+                            <li>Day 1: Shibuya, Harajuku, Meiji Shrine</li>
+                            <li>Day 2: Asakusa, Senso-ji Temple, Tokyo Skytree</li>
+                            <li>Day 3: Shinjuku, Tokyo Metropolitan Government Building, Robot Restaurant</li>
+                            <li>Day 4: Day trip to Hakone (hot springs, views of Mt. Fuji)</li>
+                            <li>Day 5: Ginza (shopping), Imperial Palace East Garden</li>
+                            <li>Day 6: Ueno Park (museums, zoo), Akihabara (electronics)</li>
+                            <li>Day 7: Explore local neighborhoods, farewell dinner</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="itinerary-card">
+                    <div class="itinerary-carousel">
+                        <div class="image-slide"><img src="https://via.placeholder.com/400x250/FFCC80/000000" alt="Rome 1"></div>
+                        <div class="image-slide"><img src="https://via.placeholder.com/400x250/FFCC80/000000" alt="Rome 2"></div>
+                        <div class="image-slide"><img src="https://via.placeholder.com/400x250/FFCC80/000000" alt="Rome 3"></div>
+                    </div>
+                    <div class="itinerary-card-content">
+                        <h3>5 Days in Rome</h3>
+                        <p>Discover the ancient wonders of Rome.</p>
+                        <ul>
+                            <li>Day 1: Colosseum, Roman Forum, Palatine Hill</li>
+                            <li>Day 2: Vatican City (St. Peter's Basilica, Vatican Museums)</li>
+                            <li>Day 3: Trevi Fountain, Pantheon, Spanish Steps</li>
+                            <li>Day 4: Borghese Gallery and Gardens, Catacombs</li>
+                            <li>Day 5: Trastevere neighborhood, Cooking class (optional)</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>© 2023 Travel Guide</p>
+    </footer>
+   <div id="overlay" class="overlay" onclick="closeSidebar()"></div>
+    <script src="https://kit.fontawesome.com/your-font-awesome-kit.js" crossorigin="anonymous"></script> 
+<script>
+  function toggleSidebar() {
+            var sidebar = document.getElementById("sidebar");
+            var overlay = document.getElementById("overlay");
+            var content = document.querySelector(".content");
+
+            sidebar.classList.toggle("open");
+            overlay.classList.toggle("open");
+            content.classList.toggle("shifted");
+        }
+
+        function closeSidebar() {
+            var sidebar = document.getElementById("sidebar");
+            var overlay = document.getElementById("overlay");
+            var content = document.querySelector(".content");
+
+            sidebar.classList.remove("open");
+            overlay.classList.remove("open");
+            content.classList.remove("shifted");
+        }
+
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.itinerary-carousel').slick({
+                dots: true,
+                infinite: true,
+                speed: 500,
+slidesToShow: 1,
+                slidesToScroll: 1,
+                autoplay: true,
+                autoplaySpeed: 3000,
+                arrows: true, // Show navigation arrows
+                prevArrow: '<button type="button" class="slick-prev">Previous</button>', // Customize prev arrow
+                nextArrow: '<button type="button" class="slick-next">Next</button>', // Customize next arrow
+            });
+        });
+    </script>
+
+</body>
+
+</html>

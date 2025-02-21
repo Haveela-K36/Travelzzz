@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel FAQ & Contact</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* ... (Your existing CSS styles) ... */
+        :root {
+            --primary-color: #f0ad4e;
+            --light-color: #f8f8f8;
+            --dark-color: #333;
+            --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+            --primary-color-rgb: 52, 152, 219;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            flex: 1;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        h2 {
+            color: var(--dark-color);
+            margin-bottom: 20px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+        }
+
+        .faq-section,
+        .contact-section {
+            margin-bottom: 40px;
+        }
+
+        .faq-question {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            margin-bottom: 10px;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+
+        .faq-question:hover {
+            background-color: #f0f0f0;
+        }
+
+        .faq-question.active .faq-answer {
+            display: block;
+        }
+
+        .faq-question .faq-answer {
+            display: none;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: var(--box-shadow);
+            margin-top: 10px;
+        }
+
+        .contact-form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .contact-form button {
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .contact-form button:hover {
+            background-color: darken(var(--primary-color), 10%);
+        }
+
+        /* Responsive adjustments for contact form */
+        @media (max-width: 768px) {
+            .contact-form input,
+            .contact-form textarea {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Travel FAQ & Contact</h1>
+    </header>
+
+    <div class="container">
+        <section class="faq-section">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-question">
+                What are the visa requirements for visiting [Destination]? <i class="fas fa-chevron-down"></i>
+                <div class="faq-answer">
+                    <p>Visa requirements vary depending on your nationality and the specific destination. It's essential to check with the embassy or consulate of the country you plan to visit for the most up-to-date information.  You can also use online resources like [mention reliable websites] to get an overview, but always confirm with official sources.</p>
+                </div>
+            </div>
+            <div class="faq-question">
+                How do I exchange currency? <i class="fas fa-chevron-down"></i>
+                <div class="faq-answer">
+                    <p>You can exchange currency at banks, currency exchange bureaus, or sometimes at your hotel.  It's generally a good idea to compare exchange rates before you exchange your money to get the best deal.  Consider using a credit or debit card for some transactions, as they often offer competitive exchange rates, but be aware of any international transaction fees your bank may charge.</p>
+                </div>
+            </div>
+            <div class="faq-question">
+                What vaccinations do I need? <i class="fas fa-chevron-down"></i>
+                <div class="faq-answer">
+                    <p>Vaccination requirements depend on your destination and your personal health history. Consult your doctor or a travel clinic well in advance of your trip to determine which vaccinations are recommended or required.  They can provide personalized advice based on your itinerary and health status.</p>
+                </div>
+            </div>
+            </div>
+        </section>
+
+        <section class="contact-section">
+            <h2>Contact Us</h2>
+            <div class="contact-form">
+                <form action="mailto:your_email@example.com" method="post" enctype="text/plain">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+
+                    <label for="message">Message:</label>
+                    <textarea id="message" name="message" rows="5" required></textarea>
+
+                    <button type="submit">Send Message</button>
+                </form>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>© 2023 Travel Guide</p>
+    </footer>
+
+    <script>
+        const faqQuestions = document.querySelectorAll('.faq-question');
+
+        faqQuestions.forEach(question => {
+            question.addEventListener('click', () => {
+                question.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+
+</html>

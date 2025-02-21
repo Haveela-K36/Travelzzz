@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile - TravelTales</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+    /* style.css */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    background-color: #f4f4f4;
+    color: #333; /* Dark gray text for better contrast */
+}
+
+/* Navigation Styles */
+nav {
+    background-color: #333;
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed; /* Fixed navbar */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10; /* Ensure it's above other content */
+}
+
+nav .logo {
+    font-weight: bold;
+    font-size: 1.4em;
+    font-family: 'Playfair Display', serif;
+    color: white;
+    text-decoration: none;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+nav li {
+    margin-left: 20px; /* Space between nav items */
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+nav a:hover, nav a.active {
+    color: #ddd;
+}
+
+/* Main Content Styles */
+main.profile-container {
+    width: 85%; /* Slightly wider container */
+    margin: 80px auto 20px; /* Adjust top margin for navbar */
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden; /* Prevents image overflow */
+}
+
+/* Profile Header Styles */
+.profile-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.profile-picture {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    margin-right: 30px;
+    object-fit: cover;
+    border: 3px solid white; /* White border for contrast */
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+}
+
+.profile-info {
+    flex: 1;
+}
+
+.profile-info h1 {
+    font-size: 2em;
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 10px;
+}
+
+.profile-bio {
+    color: #666; /* Lighter gray for bio */
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.profile-stats {
+    display: flex;
+    gap: 20px; /* Space between stats */
+}
+
+.stat {
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 1.8em;
+    font-weight: bold;
+    display: block;
+margin-bottom: 5px;
+}
+
+.stat-label {
+    color: #888; /* Slightly lighter gray for labels */
+}
+
+/* Profile Section Styles */
+.profile-section {
+    margin-bottom: 30px;
+    padding: 25px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-section h2 {
+    font-size: 1.6em;
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ddd; /* Subtle separator line */
+    padding-bottom: 10px;
+}
+
+/* Travel History Styles */
+.travel-history {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+}
+
+.trip {
+    flex: 1 0 300px; /* Each trip takes at least 300px */
+    border: 1px solid #eee;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.trip:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.trip-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.trip-details h3 {
+    font-size: 1.4em;
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 10px;
+}
+
+.trip-details p {
+    line-height: 1.6;
+    color: #666;
+}
+
+/* Interests & Favorites Styles */
+.interests {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.interest {
+    background-color: #f0f0f0;
+    padding: 10px 15px;
+    border-radius: 5px;
+    display: flex; /* Use flexbox for icon and text */
+    align-items: center;
+    gap: 8px; /* Space between icon and text */
+}
+
+.interest i {
+    color: #888; /* Slightly lighter gray for icon */
+}
+
+.favorites h3 {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.favorites ul {
+    list-style: none;
+    padding: 0;
+}
+
+.favorites li {
+    margin-bottom: 8px;
+}
+
+/* Settings Styles */
+.profile-section form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.profile-section form input[type="file"],
+.profile-section form input[type="email"],
+.profile-section form input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.profile-section form input[type="submit"] {
+    background-color: #007bff;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.profile-section form input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Footer Styles */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+.profile-picture {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    margin-right: 30px;
+    object-fit: cover;
+    border: 3px solid white;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+    position: relative; /* Needed for absolute positioning of the overlay */
+    cursor: pointer; /* Make the image clickable */
+}
+
+.profile-picture::before {
+    content: "+"; /* Plus symbol */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center the plus */
+    font-size: 2em; /* Adjust size as needed */
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+    border-radius: 50%; /* Make the overlay circular */
+    padding: 15px; /* Adjust padding as needed */
+    opacity: 0; /* Initially hidden */
+    transition: opacity 0.3s ease; /* Smooth transition */
+}
+
+.profile-picture:hover::before {
+    opacity: 1; /* Show overlay on hover */
+}
+nav {
+            background-color: #f0f0f0;
+            padding: 10px;
+            display: flex;
+            justify-content: space-around; /* Changed to space-around */
+            align-items: center; /* Vertically center items */
+            padding-left: 50px; /* Keep left padding for logo */
+            position: fixed; /* Fixed navigation */
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 3; /* Ensure it's above other elements */
+        }
+
+        .nav-item {
+            position: relative;
+            display: inline-block;
+            overflow: hidden;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 5px 10px;
+            text-decoration: none;
+            color: #333;
+            transition: color 0.3s;
+        }
+
+        .nav-item:hover .nav-link {
+            color: #007bff;
+        }
+
+        .nav-image {
+            position: absolute;
+            top: 50%;
+            left: -50px;
+            transform: translateY(-50%);
+            width: 30px;
+            height: auto;
+            transition: left 0.3s ease-in-out;
+        }
+
+        .nav-item:hover .nav-image {
+            left: 10px;
+        }
+
+        .hamburger {
+            font-size: 30px;
+            cursor: pointer;
+            padding: 10px;
+            background-color: #111;
+            color: white;
+            position: fixed; /* Fixed hamburger */
+            top: 20px;
+            left: 20px;
+            z-index: 4; /* Ensure it's above the nav */
+        }
+       .sidebar {
+            position: fixed;
+            top: 0;
+            left: -250px; /* Hidden off-screen by default */
+            width: 250px;
+            height: 100%;
+            background-color: #333;
+            color: white;
+            padding-top: 60px; /* Adjust for hamburger height */
+            transition: left 0.3s ease-in-out;
+            z-index: 3; /* Ensure it's above other elements */
+            overflow-y: auto; /* Add scroll if content overflows */
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar li {
+            padding: 10px 20px;
+            border-bottom: 1px solid #555;
+        }
+
+        .sidebar a {
+            text-decoration: none;
+            color: white;
+            display: block;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #555;
+        }
+
+        .sidebar.open {
+            left: 0; /* Slide in when open */
+        }
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+            z-index: 2; /* Below the sidebar but above the main content */
+            display: none; /* Hidden by default */
+            transition: opacity 0.3s ease; /* Smooth transition */
+        }
+
+        #overlay.open {
+            display: block; /* Show when open */
+            opacity: 1;
+        }
+
+        /* Styles for the main content area */
+        .content {
+            padding-top: 80px; /* Adjust for nav height */
+            transition: transform 0.3s ease; /* Smooth transition for shifting */
+        }
+
+        .content.shifted {
+            transform: translateX(250px); /* Shift content to the right */
+        }
+.sidebar details summary {
+    cursor: pointer;
+    padding: 10px 20px;
+    border-bottom: 1px solid #555;
+    list-style: none; /* Remove bullet from summary */
+    display: flex; /* Use flexbox for alignment */
+    align-items: center; /* Vertically center items */
+    justify-content: space-between; /* Space between text and arrow */
+}
+
+.sidebar details ul {
+    list-style: none;
+    padding: 0; /* Remove default padding */
+    margin: 0;
+}
+
+.sidebar details li a {
+    display: block; /* Make links fill the list item width */
+    padding: 10px 20px;
+    text-decoration: none;
+    color: white;
+    transition: background-color 0.3s;
+    border-bottom: 1px solid #555; /* Add separators for dropdown items */
+}
+
+.sidebar details li a:hover {
+    background-color: #555;
+}
+
+.sidebar details[open] summary::after {
+    content: "▼"; /* Down arrow when open */
+}
+
+.sidebar details summary::after {
+    content: "▶"; /* Right arrow when closed */
+}
+
+.sidebar details ul li {
+    padding: 0; /* Remove default padding */
+}
+.sidebar details ul ul li a { /* Targets <a> inside nested <ul> */
+    padding-left: 40px; /* Adjust indentation as needed */
+}
+
+/* Optional: Add a separator line between top-level categories and subcategories */
+.sidebar details > ul > li > details > ul {
+    border-top: 1px solid #555; /* Add a separator */
+    margin-top: 10px; /* Add some space above */
+}
+
+.edit-icon {
+    font-size: 0.8em; /* Adjust size as needed */
+    color: #888; /* Lighter gray color */
+    margin-left: 10px; /* Space between name and icon */
+    cursor: pointer; /* Indicate that it's clickable */
+    opacity: 0; /* Initially hidden */
+    transition: opacity 0.3s ease; /* Smooth transition */
+}.profile-info h1:hover.edit-icon {
+    opacity: 1; /* Show icon on hover */
+}
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div class="nav-item">
+            <a href="somthing.html" class="nav-link">Home</a>
+            <img src="home_icon.png" alt="Home Icon" class="nav-image">
+        </div>
+        <div class="nav-item">
+            <a href="C:\Users\ksolo\OneDrive\Desktop\traveltales\destinations.html" class="nav-link">Destinations</a>
+            <img src="destination_icon.png" alt="Destinations Icon" class="nav-image">
+        </div>
+        <div class="nav-item">
+            <a href="C:\Users\ksolo\OneDrive\Desktop\traveltales\TravelTips.html" class="nav-link">Travel Tips</a>
+            <img src="tips_icon.png" alt="Travel Tips Icon" class="nav-image">
+        </div>
+        <div class="nav-item">
+            <a href="C:\Users\ksolo\OneDrive\Desktop\traveltales\Itineraries.html" class="nav-link">Itineraries</a>
+            <img src="itinerary_icon.png" alt="Itineraries Icon" class="nav-image">
+        </div>
+        <div class="nav-item">
+            <a href="C:\Users\ksolo\OneDrive\Desktop\traveltales\accomodation.html" class="nav-link">Accommodation</a>
+            <img src="accommodation_icon.png" alt="Accommodation Icon" class="nav-image">
+        </div>
+        <div class="nav-item">
+            <a href="C:\Users\ksolo\OneDrive\Desktop\traveltales\foods_drinks.html" class="nav-link">Food & Drink</a>
+            <img src="food_icon.png" alt="Food & Drink Icon" class="nav-image">
+        </div>
+        <div class="nav-item">
+            <a href="C:\Users\ksolo\OneDrive\Desktop\traveltales\TravelInsurance&Safety.html" class="nav-link">Travel Insurance & Safety</a>
+            <img src="safety_icon.png" alt="Safety Icon" class="nav-image">
+        </div>
+         <div class="nav-item">
+            <a href="C:\Users\ksolo\OneDrive\Desktop\traveltales\profile.html" class="nav-link">Profile</a>
+            <img src="safety_icon.png" alt="Profile" class="nav-image">
+        </div>
+        <div class="nav-item">
+            <img src="logo.png" alt="Profile" class="nav-image">
+        </div>
+    </nav>
+
+    <div class="hamburger" onclick="toggleSidebar()">&#9776;</div> <div id="sidebar" class="sidebar">
+<ul>
+    <li><a href="#">Services</a></li>
+    <li><a href="#">Contact</a></li>
+    <li>
+        <details>
+            <summary>Destinations</summary>
+            <ul>
+                <li><a href="#">Local</a></li>
+                <li><a href="#">Non-Local</a></li>
+                <li><a href="#">National</a></li>
+                <li><a href="#">International</a></li>
+            </ul>
+        </details>
+    </li>
+    <li><a href="C:\Users\ksolo\OneDrive\Desktop\traveltales\Blog.html">Blog</a></li>
+    <li><a href="C:\Users\ksolo\OneDrive\Desktop\traveltales\PhotoGallery.html">Photo Gallery</a></li>
+    <li><a href="C:\Users\ksolo\OneDrive\Desktop\traveltales\faq.html">FAQ</a></li>
+    <li><a href="#">Travel Forum</a></li>
+    <li><a href="#">Search</a></li>
+</ul>
+    </div>
+
+    <main class="profile-container">
+        <section class="profile-header">
+            <img src="profile_placeholder.jpg" alt="Profile Picture" class="profile-picture">
+            <div class="profile-info">
+                <h1>User Name</h1>
+                <p class="profile-bio">A short and engaging bio about the user.  Mention travel style, interests, etc.</p>
+                <div class="profile-stats">
+                    <div class="stat">
+                        <span class="stat-number">42</span>
+                        <span class="stat-label">Trips</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">12</span>
+                        <span class="stat-label">Countries</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">25</span>
+                        <span class="stat-label">Cities</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="profile-section">
+            <h2>Travel History</h2>
+            <div class="travel-history">
+                <div class="trip">
+                    <img src="trip1.jpg" alt="Trip 1" class="trip-image">
+                    <div class="trip-details">
+                        <h3>Trip to Paris</h3>
+                        <p>Dates: July 10-20, 2023</p>
+                        <p>Description: A memorable trip to the City of Lights, exploring iconic landmarks and indulging in French cuisine.</p>
+                    </div>
+                </div>
+                <div class="trip">
+                    <img src="trip2.jpg" alt="Trip 2" class="trip-image">
+                    <div class="trip-details">
+                        <h3>Adventure in the Mountains</h3>
+                        <p>Dates: August 5-12, 2023</p>
+                        <p>Description: An exhilarating trek through the majestic mountains, surrounded by breathtaking scenery.</p>
+                    </div>
+                </div>
+                </div>
+        </section>
+
+        <section class="profile-section">
+            <h2>Interests & Favorites</h2>
+            <div class="interests">
+                <div class="interest">
+                    <i class="fas fa-hiking"></i> Hiking
+                </div>
+                <div class="interest">
+                    <i class="fas fa-camera"></i> Photography
+                </div>
+                <div class="interest">
+                    <i class="fas fa-utensils"></i> Foodie Adventures
+                </div>
+                <div class="interest">
+                    <i class="fas fa-globe"></i> Exploring New Cultures
+                </div>
+                </div>
+
+            <div class="favorites">
+                <h3>Favorite Destinations</h3>
+                <ul>
+                    <li>Paris</li>
+                    <li>Kyoto</li>
+                    <li>Machu Picchu</li>
+                </ul>
+                <h3>Favorite Activities</h3>
+                <ul>
+                    <li>Trekking</li>
+                    <li>Wildlife Safaris</li>
+                    <li>Trying Local Cuisine</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="profile-section">
+            <h2>Settings</h2>
+            <form>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" value="user@example.com"><br><br>
+
+                <label for="location">Location:</label>
+                <input type="text" id="location" name="location" value="City, Country"><br><br>
+
+                <input type="submit" value="Save Changes">
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 TravelTales. All rights reserved.</p>
+    </footer>
+   <div id="overlay" class="overlay" onclick="closeSidebar()"></div>
+    <script src="https://kit.fontawesome.com/your-font-awesome-kit.js" crossorigin="anonymous"></script> 
+<script>
+  function toggleSidebar() {
+            var sidebar = document.getElementById("sidebar");
+            var overlay = document.getElementById("overlay");
+            var content = document.querySelector(".content");
+
+            sidebar.classList.toggle("open");
+            overlay.classList.toggle("open");
+            content.classList.toggle("shifted");
+        }
+
+        function closeSidebar() {
+            var sidebar = document.getElementById("sidebar");
+            var overlay = document.getElementById("overlay");
+            var content = document.querySelector(".content");
+
+            sidebar.classList.remove("open");
+            overlay.classList.remove("open");
+            content.classList.remove("shifted");
+        }
+
+    </script>
+<script>
+
+</script>
+    <script src="script.js"></script>
+    <script src="https://kit.fontawesome.com/your-font-awesome-kit.js" crossorigin="anonymous"></script> </body>
+
+</html>

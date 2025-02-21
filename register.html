@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Tales - Register</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+:root {
+    --primary-color: #92cbdf; /* Gold/Amber */
+    --secondary-color: #333; /* Dark Gray/Black */
+    --light-color: #f8f8f8; /* Light Gray/Off-White */
+}
+
+body,
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Roboto', sans-serif;
+    background: var(--light-color); /* Fallback background color */
+    overflow: hidden; /* Hide scrollbars if video is larger */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.video-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.video-background video {
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    object-fit: cover; /* Ensures video covers entire area */
+}
+
+.login-container, .register-container { /* Combined styles */
+    background: rgba(0, 0, 0, 0.6); /* Semi-transparent black */
+    padding: 40px;
+    border-radius: 10px;
+    width: 400px;
+    max-width: 90%; /* Responsive width */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    text-align: center; /* Center content within the form */
+}
+
+.login-container h1, .register-container h1 { /* Combined styles */
+    font-family: 'Playfair Display', serif;
+    color: #92cbdf; /* Changed to black */
+    margin-bottom: 30px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Slightly smaller gap for register form */
+}
+
+label {
+    color: white;
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+input[type="text"],
+input[type="email"], /* Added email input style */
+input[type="password"] {
+    padding: 10px; /* Slightly smaller padding for register form */
+    border: none;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    width: calc(100% - 20px); /* Account for padding */
+    box-sizing: border-box; /* Include padding in width calculation */
+}
+
+input[type="submit"] {
+    background: var(--primary-color);
+    color: var(--secondary-color);
+    padding: 10px 20px; /* Slightly smaller padding for register form */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background: #c09822; /* Slightly darker gold */
+}
+
+.forgot-password, .login-link { /* Combined styles */
+    color: white;
+    text-decoration: none;
+    margin-top: 10px; /* Adjusted margin */
+    display: block; /* Make it a block element to stack below input */
+    text-align: center;
+}
+
+.login-link { /* Specific style for register page link */
+    margin-top: 20px; /* More margin for register link */
+}
+
+
+.forgot-password:hover, .login-link:hover { /* Added hover effect */
+  text-decoration: underline;
+}
+
+.login-link span {
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.error-message {
+    color: red;
+    margin-top: 10px;
+}
+    </style>
+    <script>
+        function validateRegisterForm() {
+            var name = document.registrationForm.name.value;
+            var email = document.registrationForm.email.value;
+            var password = document.registrationForm.password.value;
+            var confirmPassword = document.registrationForm.confirmPassword.value;
+            var errorMessage = document.querySelector('.error-message');
+            errorMessage.textContent = "";
+
+            if (name == null || name.trim() == "") {
+                errorMessage.textContent = "Name is required.";
+                return false;
+            }
+
+            if (email == null || email.trim() == "") {
+                errorMessage.textContent = "Email is required.";
+                return false;
+            }
+
+            // Basic email validation (you can use a more robust regex)
+            if (!isValidEmail(email)) {
+                errorMessage.textContent = "Invalid email format.";
+                return false;
+            }
+
+            if (password == null || password.trim() == "") {
+                errorMessage.textContent = "Password is required.";
+                return false;
+            }
+
+            if (password.length < 8) {
+                errorMessage.textContent = "Password must be at least 8 characters long.";
+                return false;
+            }
+
+            if (confirmPassword == null || confirmPassword.trim() == "") {
+                errorMessage.textContent = "Confirm Password is required.";
+                return false;
+            }
+
+            if (password !== confirmPassword) {
+                errorMessage.textContent = "Passwords do not match.";
+                return false;
+            }
+
+            // If validation is successful, you would typically submit the form to the server
+            // For this example, we will just redirect to home1.html
+            window.location.href = "somthing.html";
+            return false;
+
+        }
+
+        function isValidEmail(email) {
+          return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email); // A simple regex
+        }
+    </script>
+</head>
+
+<body>
+    <div class="video-background">
+        <video autoplay muted loop>
+            <source src="" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <div class="register-container">
+        <h1>Travel Tales - Register</h1>
+        <form name="registrationForm" onsubmit="return validateRegisterForm()">
+            <label for="name">Name</label>
+            <input type="text" name="name">
+
+            <label for="email">Email</label>
+            <input type="email" name="email">
+
+            <label for="password">Password</label>
+            <input type="password" name="password">
+
+            <label for="confirmPassword">Confirm Password</label>
+            <input type="password" name="confirmPassword">
+
+            <input type="submit" value="Register">
+            <div class="error-message"></div>
+
+            <a href="index.html" class="login-link">Already have an account? <span>Login</span></a>
+        </form>
+    </div>
+</body>
+
+</html>

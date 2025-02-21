@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Gallery</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/4.3.0/jquery.fancybox.min.css" />
+    <style>
+        /* ... (Your existing CSS - keep it!) ... */
+        :root {
+            --primary-color: #f0ad4e;
+            --light-color: #f8f8f8;
+            --dark-color: #333;
+            --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+            --primary-color-rgb: 52, 152, 219;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            flex: 1;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        h2 {
+            color: var(--dark-color);
+            margin-bottom: 20px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+        }
+
+        .gallery-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .gallery-item {
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            position: relative; /* For overlay positioning */
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 200px; /* Consistent height for images */
+            object-fit: cover;
+            display: block;
+        }
+
+        .gallery-item-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0; /* Initially hidden */
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-item-overlay {
+            opacity: 1; /* Visible on hover */
+        }
+
+        .gallery-item-overlay-content {
+            text-align: center;
+        }
+
+        .gallery-item-overlay h3 {
+            margin-bottom: 5px;
+        }
+
+        /* Add image button style */
+      .add-image-button {
+            position: fixed; /* Fixed position */
+            bottom: 20px; /* Adjust from bottom */
+            right: 20px; /* Adjust from right */
+            background-color: var(--primary-color);
+            color: #fff;
+            border: none;
+            border-radius: 50%; /* Make it round */
+            width: 50px; /* Size */
+            height: 50px;
+            font-size: 2rem; /* Plus sign size */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            z-index: 10; /* Ensure it's above other elements */
+        }
+
+        .add-image-button:hover {
+            background-color: darken(var(--primary-color), 10%);
+            transform: scale(1.1); /* Scale on hover */
+        }
+
+        /* Hide the original button */
+        #add-image-text {
+            display: none;
+        }
+
+        /* Style for the file input (hidden by default) */
+        #image-upload {
+            display: none;
+        }
+        /* Responsive adjustments for gallery */
+        @media (max-width: 768px) {
+            .gallery-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Photo Gallery</h1>
+    </header>
+
+    <div class="container">
+        <select id="country-select">
+            <option value="">Select a Country</option>
+            <option value="india">India</option>
+            <option value="usa">USA</option>
+        </select>
+
+        <select id="state-select">
+            <option value="">Select a State</option>
+        </select>
+
+        <div class="gallery-container" id="gallery">
+            </div>
+ <div class="container">
+        <button class="add-image-button" id="add-image">
+            <span>+</span>  </button>
+        <span id="add-image-text">Add Image</span>
+        <input type="file" id="image-upload" accept="image/*">
+    </div>
+    </div>
+
+    <footer>
+        <p>© 2023 Travel Guide</p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/4.3.0/jquery.fancybox.min.js"></script>
+    <script>
+const gallery = document.getElementById('gallery');
+const addImageButton = document.getElementById('add-image');
+const imageUpload = document.getElementById('image-upload');
+const countrySelect = document.getElementById('country-select');
+const stateSelect = document.getElementById('state-select');
+const imagePreview = document.getElementById('image-preview'); // Add this line - get the preview element
+
+const galleryData = {
+    india: {
+        telangana: [
+            { src: "image1.jpg", alt: "Charminar" },
+            { src: "image2.jpg", alt: "Golconda Fort" },
+        ],
+        maharashtra: [
+            { src: "image3.jpg", alt: "Gateway of India" },
+            { src: "image4.jpg", alt: "Ajanta Caves" },
+        ],
+        // ... more states for India
+    },
+    usa: {
+        california: [
+            { src: "image5.jpg", alt: "Golden Gate Bridge" },
+            { src: "image6.jpg", alt: "Yosemite National Park" },
+        ],
+        newyork: [
+            { src: "image7.jpg", alt: "Statue of Liberty" },
+            { src: "image8.jpg", alt: "Central Park" },
+        ],
+        // ... more states for USA
+    },
+    // ... more countries
+};
+
+function populateGallery(country, state) {
+    gallery.innerHTML = ''; // Clear existing gallery
+
+    if (galleryData[country] && galleryData[country][state]) {
+        galleryData[country][state].forEach(image => {
+            const galleryItem = document.createElement('div');
+            galleryItem.classList.add('gallery-item');
+            galleryItem.innerHTML = `
+                <img src="${image.src}" alt="${image.alt}">
+                <div class="gallery-item-overlay">
+                    <div class="gallery-item-overlay-content">
+                        <h3>${image.alt}</h3>
+                        <p>${state}, ${country}</p>
+                    </div>
+                </div>
+            `;
+            gallery.appendChild(galleryItem);
+        });
+    } else {
+        gallery.innerHTML = "<p>No images found for this location.</p>";
+    }
+}
+
+countrySelect.addEventListener('change', () => {
+    const selectedCountry = countrySelect.value;
+    stateSelect.innerHTML = '<option value="">Select a State</option>'; // Reset state select
+
+    if (selectedCountry && galleryData[selectedCountry]) {
+        Object.keys(galleryData[selectedCountry]).forEach(state => {
+            const option = document.createElement('option');
+            option.value = state;
+            option.text = state;
+            stateSelect.appendChild(option);
+        });
+    }
+
+    // Populate gallery based on selected country (default to first state if available)
+    if (galleryData[selectedCountry] && Object.keys(galleryData[selectedCountry]).length > 0) {
+      const firstState = Object.keys(galleryData[selectedCountry])[0];
+      populateGallery(selectedCountry, firstState);
+    } else {
+      populateGallery(selectedCountry, ''); // Handle case where no states exist
+    }
+
+});
+
+stateSelect.addEventListener('change', () => {
+    const selectedCountry = countrySelect.value;
+    const selectedState = stateSelect.value;
+    populateGallery(selectedCountry, selectedState);
+});
+
+addImageButton.addEventListener('click', () => {
+    imageUpload.click(); // Trigger file input click
+});
+
+imageUpload.addEventListener('change', () => {
+    const file = imageUpload.files[0];
+    imagePreview.innerHTML = ""; // Clear previous preview
+
+    if (file) {
+        const reader = new FileReader();
+
+        reader.onloadstart = () => {
+            addImageButton.disabled = true;
+            addImageButton.textContent = "Uploading...";
+        };
+
+        reader.onloadend = () => {
+            addImageButton.disabled = false;
+            addImageButton.textContent = "Add Image";
+        };
+
+        reader.onload = (e) => {
+            const newImage = { src: e.target.result, alt: file.name };
+
+            const previewImage = document.createElement('img');
+            previewImage.src = newImage.src;
+            previewImage.alt = newImage.alt;
+            previewImage.style.maxWidth = '100px';
+            previewImage.style.marginRight = '10px';
+            imagePreview.appendChild(previewImage); // Add preview to the page
+
+            const selectedCountry = countrySelect.value;
+            const selectedState = stateSelect.value;
+
+            if (selectedCountry && selectedState && galleryData[selectedCountry] && galleryData[selectedCountry][selectedState]) {
+                galleryData[selectedCountry][selectedState].push(newImage);
+                populateGallery(selectedCountry, selectedState);
+            } else {
+                alert("Please select both country and state before adding an image.");
+            }
+        };
+
+        reader.onerror = (error) => {
+            console.error("Error reading file:", error);
+            alert("Error reading image file. Please try again.");
+        };
+
+        reader.readAsDataURL(file);
+    }
+});
+
+// Initialize the gallery on page load (default to India, Telangana)
+if (galleryData['india'] && Object.keys(galleryData['india']).length > 0) {
+    populateGallery('india', Object.keys(galleryData['india'])[0]);
+}
+
+
+// Populate country select on page load
+Object.keys(galleryData).forEach(country => {
+    const option = document.createElement('option');
+    option.value = country;
+    option.text = country;
+    countrySelect.appendChild(option);
+});
+
+// Initialize state select based on the default country (India)
+if (galleryData['india'] && Object.keys(galleryData['india']).length > 0) {
+    Object.keys(galleryData['india']).forEach(state => {
+        const option = document.createElement('option');
+        option.value = state;
+        option.text = state;
+        stateSelect.appendChild(option);
+    });
+}    </script>
+</body>
+
+</html>

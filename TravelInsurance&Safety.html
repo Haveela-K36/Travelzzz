@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Insurance & Safety</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2ecc71; /* A calming, trustworthy green */
+            --light-color: #f8f8f8;
+            --dark-color: #333;
+            --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+            font-size: 16px;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        a:hover {
+            color: darken(var(--primary-color), 10%);
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            flex: 1;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        h2 {
+            color: var(--dark-color);
+            margin-bottom: 20px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+        }
+
+        .safety-tips-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .safety-tip-card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: var(--box-shadow);
+            padding: 25px;
+            transition: var(--transition);
+        }
+
+        .safety-tip-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .safety-tip-card h3 {
+            font-family: 'Montserrat', sans-serif;
+            margin-bottom: 15px;
+            color: var(--dark-color);
+        }
+
+        .safety-tip-card p {
+            color: #777;
+        }
+
+        .insurance-providers {
+            margin-top: 30px;
+        }
+
+        .insurance-providers ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .insurance-providers li {
+            margin-bottom: 10px;
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 15px 0;
+            margin-top: 20px;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        h2 {
+            font-size: 1.8rem; /* Larger heading size */
+        }
+
+        .safety-tip-card {
+            padding: 30px; /* More padding within cards */
+        }
+
+        .safety-tip-card h3 {
+            font-size: 1.2rem; /* Nicer card heading size */
+        }
+
+        .insurance-providers p,
+        .insurance-providers ul {
+            font-size: 1rem; /* Better size for provider list */
+        }
+
+        /* Add some hover effect to the provider links */
+        .insurance-providers a {
+            transition: color 0.3s ease; /* Smooth color transition */
+        }
+
+        .insurance-providers a:hover {
+            color: darken(var(--primary-color), 15%); /* Darker color on hover */
+        }
+nav {
+            background-color: #f0f0f0;
+            padding: 10px;
+            display: flex;
+            justify-content: space-around; /* Changed to space-around */
+            align-items: center; /* Vertically center items */
+            padding-left: 50px; /* Keep left padding for logo */
+            position: fixed; /* Fixed navigation */
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 3; /* Ensure it's above other elements */
+        }
+
+        .nav-item {
+            position: relative;
+            display: inline-block;
+            overflow: hidden;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 5px 10px;
+            text-decoration: none;
+            color: #333;
+            transition: color 0.3s;
+        }
+
+        .nav-item:hover .nav-link {
+            color: #007bff;
+        }
+
+        .nav-image {
+            position: absolute;
+            top: 50%;
+            left: -50px;
+            transform: translateY(-50%);
+            width: 30px;
+            height: auto;
+            transition: left 0.3s ease-in-out;
+        }
+
+        .nav-item:hover .nav-image {
+            left: 10px;
+        }
+
+        .hamburger {
+            font-size: 30px;
+            cursor: pointer;
+            padding: 10px;
+            background-color: #111;
+            color: white;
+            position: fixed; /* Fixed hamburger */
+            top: 20px;
+            left: 20px;
+            z-index: 4; /* Ensure it's above the nav */
+        }
+       .sidebar {
+            position: fixed;
+            top: 0;
+            left: -250px; /* Hidden off-screen by default */
+            width: 250px;
+            height: 100%;
+            background-color: #333;
+            color: white;
+            padding-top: 60px; /* Adjust for hamburger height */
+            transition: left 0.3s ease-in-out;
+            z-index: 3; /* Ensure it's above other elements */
+            overflow-y: auto; /* Add scroll if content overflows */
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar li {
+            padding: 10px 20px;
+            border-bottom: 1px solid #555;
+        }
+
+        .sidebar a {
+            text-decoration: none;
+            color: white;
+            display: block;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #555;
+        }
+
+        .sidebar.open {
+            left: 0; /* Slide in when open */
+        }
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+            z-index: 2; /* Below the sidebar but above the main content */
+            display: none; /* Hidden by default */
+            transition: opacity 0.3s ease; /* Smooth transition */
+        }
+
+        #overlay.open {
+            display: block; /* Show when open */
+            opacity: 1;
+        }
+
+        /* Styles for the main content area */
+        .content {
+            padding-top: 80px; /* Adjust for nav height */
+            transition: transform 0.3s ease; /* Smooth transition for shifting */
+        }
+
+        .content.shifted {
+            transform: translateX(250px); /* Shift content to the right */
+        }
+
+    </style>
+</head>
+
+<body>
+     <nav>
+        <div class="nav-item">
+            <a href="#" class="nav-link">Home</a>
+            <img src="home_icon.png" alt="Home Icon" class="nav-image">
+        </div>
+        <div class="nav-item">
+            <a href="C:\Users\ksolo\OneDrive\Desktop\traveltales\destinations.html" class="nav-link">Destinations</a>
+            <img src="destination_icon.png" alt="Destinations Icon" class="nav-image">
+        </div>
+        <div class="nav-item">
+            <a href="C:\Users\ksolo\OneDrive\Desktop\traveltales\TravelTips.html" class="nav-link">Travel Tips</a>
+            <img src="tips_icon.png" alt="Travel Tips Icon" class="nav-image">
+        </div>
+        <div class="nav-item">
+            <a href="C:\Users\ksolo\OneDrive\Desktop\traveltales\Itineraries.html" class="nav-link">Itineraries</a>
+            <img src="itinerary_icon.png" alt="Itineraries Icon" class="nav-image">
+        </div>
+        <div class="nav-item">
+            <a href="C:\Users\ksolo\OneDrive\Desktop\traveltales\accomodation.html" class="nav-link">Accommodation</a>
+            <img src="accommodation_icon.png" alt="Accommodation Icon" class="nav-image">
+        </div>
+        <div class="nav-item">
+            <a href="C:\Users\ksolo\OneDrive\Desktop\traveltales\foods_drinks.html" class="nav-link">Food & Drink</a>
+            <img src="food_icon.png" alt="Food & Drink Icon" class="nav-image">
+        </div>
+        <div class="nav-item">
+            <a href="C:\Users\ksolo\OneDrive\Desktop\traveltales\TravelInsurance&Safety.html" class="nav-link">Travel Insurance & Safety</a>
+            <img src="safety_icon.png" alt="Safety Icon" class="nav-image">
+        </div>
+         <div class="nav-item">
+            <a href="C:\Users\ksolo\OneDrive\Desktop\traveltales\profile.html" class="nav-link">Profile</a>
+            <img src="safety_icon.png" alt="Profile" class="nav-image">
+        </div>
+        <div class="nav-item">
+            <img src="logo.png" alt="Profile" class="nav-image">
+        </div>
+    </nav>
+
+    <div class="hamburger" onclick="toggleSidebar()">&#9776;</div> <div id="sidebar" class="sidebar">
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">Transportation</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Photo Gallery</a></li>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Travel Forum</a></li>
+            <li><a href="#">Search</a></li>
+
+        </ul>
+    </div>
+
+
+    <div class="container">
+        <section class="section">
+            <h2>Safety Tips</h2>
+            <div class="safety-tips-container">
+                <div class="safety-tip-card">
+                    <h3>Research Your Destination</h3>
+                    <p>Learn about local customs, laws, and potential risks before you go. Check travel advisories and
+                        stay updated on any political or social unrest.</p>
+                </div>
+                <div class="safety-tip-card">
+                    <h3>Secure Your Belongings</h3>
+                    <p>Use a money belt or secure pouch for valuables. Be discreet with expensive electronics and avoid
+                        displaying large amounts of cash. Be aware of common scams in your destination.</p>
+                </div>
+                <div class="safety-tip-card">
+                    <h3>Stay Connected</h3>
+                    <p>Share your itinerary with family or friends. Consider a local SIM card or roaming plan for easy
+                        communication. Utilize secure Wi-Fi networks and avoid public computers for sensitive tasks.</p>
+                </div>
+                <div class="safety-tip-card">
+                    <h3>Emergency Contacts</h3>
+                    <p>Keep a list of emergency contacts, including local authorities, your embassy/consulate, and your
+                        travel insurance provider's 24-hour assistance number. Store these contacts both digitally and
+                        on paper.</p>
+                </div>
+                <div class="safety-tip-card">
+                    <h3>Health Precautions</h3>
+                    <p>Consult your doctor about necessary vaccinations and health recommendations for your destination.
+                        Pack a comprehensive first-aid kit with any prescription medications. Research local medical
+                        facilities and understand your insurance coverage abroad.</p>
+                </div>
+                <div class="safety-tip-card">
+                    <h3>Travel Insurance</h3>
+                    <p>Get comprehensive travel insurance to protect yourself against unforeseen events such as medical
+                        emergencies, trip cancellations, lost luggage, and personal liability. Compare policies carefully
+                        and ensure adequate coverage for your specific needs and destination.</p>
+                </div>
+                <div class="safety-tip-card">
+                    <h3>Local Transportation</h3>
+                    <p>Research safe and reliable transportation options. Be cautious with taxis and avoid unlicensed
+                        operators. If renting a vehicle, familiarize yourself with local driving laws and road conditions.
+                    </p>
+                </div>
+                <div class="safety-tip-card">
+                    <h3>Food and Water Safety</h3>
+                    <p>Be mindful of food and water safety, especially in areas with lower sanitation standards. Drink
+                        bottled water, avoid ice in drinks, and eat thoroughly cooked food from reputable establishments.
+                    </p>
+                </div>
+                <div class="safety-tip-card">
+                    <h3>Respect Local Culture</h3>
+                    <p>Be aware of and respect local customs, traditions, and dress codes. This will help you avoid
+                        unintentional offenses and ensure a more positive travel experience.
+                    </p>
+                </div>
+                <div class="safety-tip-card">
+                    <h3>Learn Basic Phrases</h3>
+                    <p>Knowing a few basic phrases in the local language can be helpful in various situations, from
+                        ordering food to asking for directions. It also shows respect for the local culture.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Insurance Providers</h2>
+            <div class="insurance-providers">
+                <p>Here are some trusted travel insurance providers (replace with actual links):</p>
+                <ul>
+                    <li><a href="https://www.worldnomads.com/">World Nomads</a></li>
+                    <li><a href="https://www.allianztravelinsurance.com/">Allianz Travel Insurance</a></li>
+                    <li><a href="https://www.travelguard.com/">Travel Guard</a></li>
+                    <li><a href="https://www.squaremouth.com/">Squaremouth (Comparison Site)</a></li>
+                </ul>
+                <p>Remember to compare policies and choose the one that best suits your needs.</p>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>© 2023 Travel Guide</p>
+    </footer>
+   <div id="overlay" class="overlay" onclick="closeSidebar()"></div>
+    <script src="https://kit.fontawesome.com/your-font-awesome-kit.js" crossorigin="anonymous"></script> 
+<script>
+  function toggleSidebar() {
+            var sidebar = document.getElementById("sidebar");
+            var overlay = document.getElementById("overlay");
+            var content = document.querySelector(".content");
+
+            sidebar.classList.toggle("open");
+            overlay.classList.toggle("open");
+            content.classList.toggle("shifted");
+        }
+
+        function closeSidebar() {
+            var sidebar = document.getElementById("sidebar");
+            var overlay = document.getElementById("overlay");
+            var content = document.querySelector(".content");
+
+            sidebar.classList.remove("open");
+            overlay.classList.remove("open");
+            content.classList.remove("shifted");
+        }
+
+    </script>
+</body>
+
+</html>
